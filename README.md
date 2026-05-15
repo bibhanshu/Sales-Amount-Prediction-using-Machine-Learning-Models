@@ -32,9 +32,9 @@ R² Score
 RMSE (Root Mean Squared Error)
 
 Result:
-Linear Regression   R2 ~0.84  RME~1571
-Random Forest       R2 ~0.94  RME~947
-Gradient Boosting   R2 ~0.93  RME~1013
+Linear Regression   R2 0.84  RME 1571
+Random Forest       R2 0.94  RME 947
+Gradient Boosting   R2 0.93  RME 1013
 
 
 🔍 Key Insights
