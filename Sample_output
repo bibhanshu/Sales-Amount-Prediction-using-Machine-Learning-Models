@@ -1,0 +1,19 @@
+Sample Output : 
+Enter No of Boxes: >? 50
+Enter year: >? 2027
+Enter Month: >? 11
+Enter Day: >? 17
+the date you added in(DD/MM/YYYY) :17/11/2027
+Please enter the Product ID you want to predict format eg (PID_P01) : >? PID_P02
+Predicted Amount: [636.9525]
+top 10 factors in result    Feature_GB  Importance_GB
+0       Boxes       0.788535
+32    PID_P04       0.035289
+33    PID_P05       0.033295
+41    PID_P13       0.026078
+50    PID_P22       0.017842
+36    PID_P08       0.016328
+35    PID_P07       0.014126
+44    PID_P16       0.012452
+47    PID_P19       0.010835
+49    PID_P21       0.010243
