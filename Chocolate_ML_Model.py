@@ -79,10 +79,10 @@ model_GB = GradientBoostingRegressor(
 )
 model_GB.fit(x_encoded_train,y_train)
 Pred_GB = model_GB.predict(x_encoded_test)
-print("Actual:", y_test[:10].values)
-print("Linn Regg Predicted:", Predicted_Thing[:10])
-print("Random_forest Prediction",pred_randomforest[:10])
-print("Gradient_boost_pred", Pred_GB[:10])
+##print("Actual:", y_test[:10].values)
+##print("Linn Regg Predicted:", Predicted_Thing[:10])
+##print("Random_forest Prediction",pred_randomforest[:10])
+##print("Gradient_boost_pred", Pred_GB[:10])
 
 ## after this i might feel Random forest is good just looking at 10 values but Gradient boost is slowling learning
 ##in jsut first 10 values it might not have completed the full learning
@@ -94,8 +94,8 @@ GB_R2 = r2_score(y_test,Pred_GB)
 # random forest not relaying on random forest only .. yes MSE RMSe is left but just at this point of time my intuition
 MSE_Gradient_Boost = mean_squared_error(y_test, Pred_GB)
 RMSE_Gradient_Boost = np.sqrt(MSE_Gradient_Boost)
-print("MSE(Gradient Boost):", MSE_Gradient_Boost,"RMSE(Gradient Boost):", RMSE_Gradient_Boost)
-print("MSE(Random Forest):", MSE_Random_Forest,"RMSE(Random Forest):", RMSE_Random_forest)
+##print("MSE(Gradient Boost):", MSE_Gradient_Boost,"RMSE(Gradient Boost):", RMSE_Gradient_Boost)
+##print("MSE(Random Forest):", MSE_Random_Forest,"RMSE(Random Forest):", RMSE_Random_forest)
 
 ##“Random Forest performed best with an RMSE of ~947 and R² of 0.94. Gradient Boosting showed comparable performance (RMSE ~1013),
 # indicating that the dataset has strong learnable patterns. Using multiple models helped validate consistency,
@@ -116,7 +116,7 @@ feature_importance_df_RF = feature_importance_df_RF.sort_values(
     by='Importance_RS',
     ascending=False
 )
-print(feature_importance_df_RF.head(10)) ##top 10 factors
+##print(feature_importance_df_RF.head(10)) ##top 10 factors
 
 ## Your model learned:
 ##Boxes is the main driver of Amount ✅
@@ -141,7 +141,7 @@ feature_importance_df_GB = feature_importance_df_GB.sort_values(
     by='Importance_GB',
     ascending=False
 )
-print(feature_importance_df_GB.head(10)) ##top 10 factors
+##print(feature_importance_df_GB.head(10)) ##top 10 factors
 
 ##Both models identified the same dominant feature (Boxes) and similar secondary features (PID),
 # which confirms that the learned patterns are reliable.”
@@ -152,11 +152,18 @@ print(feature_importance_df_GB.head(10)) ##top 10 factors
 ##Simulation : predicting a new case
 ##“Create a fake new data point and ask the model to predict Amount”
 
+Box_input = int(input('Enter No of Boxes: '))
+year = int(input('Enter year: '))
+month = int(input('Enter Month: '))
+Day = int(input('Enter Day: '))
+print(f"the date you added in(DD/MM/YYYY) :{Day}/{month}/{year}")
+Product_id = input('Please enter the Product ID you want to predict format eg (PID_P01) : ')
+
 new_data = pd.DataFrame({   #THIS CREATES A SINGLE ROW DATA i want to predict for 50 boxes in dec 2024
-    'Boxes': [50],
-    'year': [2024],
-    'month': [12],
-    'day': [10]
+    'Boxes': [Box_input],
+    'year': [year],
+    'month': [month],
+    'day': [Day]
 })
 new_data_encoded = pd.get_dummies(new_data) ##  Convert to encoded format
 
@@ -173,6 +180,12 @@ new_data_encoded = new_data_encoded.reindex(  ## my model is trained on the enco
     columns=x_encoded.columns,
     fill_value=0
 )
-new_data_encoded['PID_P05'] = 1 ## we are choosing the product 5 so pid_p05 = 1 all other zero its like moth boxex and all fo prod 5
+##new_data_encoded[Product_id] = 1 ## we are choosing the product 5 so pid_p05 = 1 all other zero its like moth boxex and all fo prod 5
+
+if Product_id not in x_encoded.columns:
+    print("Invalid Product ID! Please enter correct PID like PID_P01")
+else:
+    new_data_encoded[Product_id] = 1
 predicted_amount = model_Random_forest.predict(new_data_encoded) ##Make prediction
 print("Predicted Amount:", predicted_amount)
+print("top 10 factors in result",feature_importance_df_GB.head(10)) ##top 10 factors
